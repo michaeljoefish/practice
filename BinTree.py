@@ -25,6 +25,36 @@ class IBT:
                 node.right = Node(var, None, None)
             else:
                 self.insert(var, node.right)
+
+    def minNode(self, node):
+        """
+        Precondition: node can't be None
+        """
+        node_ptr = node
+        while node_ptr.left != None:
+            node_ptr = node_ptr.left
+        return node_ptr
+
+    def maxNode(self, node):
+        """
+        Precondition: node can't be None
+        """
+        node_ptr = node
+        while node_ptr.right != None:
+            node_ptr = node_ptr.right
+        return node_ptr
+    
+    def remove(self, var, node):
+        ptr = self.root
+        new_root = ptr
+        
+        if self.root == None:
+            return None
+        if self.root.var == var:
+            if self.root.right != None:
+                self.maxNode(self.root.right)
+
+
     
     def display(self):
         self.RML(self.root, 0)

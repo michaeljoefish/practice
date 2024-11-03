@@ -20,7 +20,7 @@ class IBT:
                 node.left = Node(var, None, None)
             else:
                 self.insert(var, node.left)
-        if (var > node.var):
+        elif (var > node.var):
             if node.right == None:
                 node.right = Node(var, None, None)
             else:
@@ -44,16 +44,29 @@ class IBT:
             node_ptr = node_ptr.right
         return node_ptr
     
-    def remove(self, var, node):
-        ptr = self.root
-        new_root = ptr
-        
-        if self.root == None:
-            return None
-        if self.root.var == var:
-            if self.root.right != None:
-                self.maxNode(self.root.right)
+    def delete(self, var):
+        self.root = self.remove(var, self.root)
 
+    def remove(self, var, node):
+        if not node:
+            return None
+        
+        if node.var == var:
+            new_node = None
+            if (node.left == None) and (node.right):
+                new_node = node.right
+            elif (node.left) and (node.right == None):
+                new_node = node.left
+            elif (node.left) and (node.right):
+                new_node = node.right
+                self.minNode(node.right).left = node.left
+            return new_node
+        
+        elif var < node.var:
+            node.left = self.remove(var, node.left)
+        else:
+            node.right = self.remove(var, node.right)
+        return node
 
     
     def display(self):
@@ -66,6 +79,29 @@ class IBT:
             print(f"{(" "*(depth*3))}{node.var}")
             self.RML(node.left, depth+1)
 
+    def height(self):
+        return self._height(self.root, 0)
+
+    def _height(self, node, h) -> int:
+        if node == None:
+            return h
+        h_left = self._height(node.left, h+1)
+        h_right = self._height(node.right, h+1)
+
+        return max(h_left, h_right)
+    
+    def search(self, var):
+        return self._search(self.root, var)
+
+    def _search(self, node, var):
+        if node == None:
+            return False
+        if node.var == var:
+            return True
+        elif var < node.var:
+            return self._search(node.left, var)
+        else:
+            return self._search(node.right, var)
 
 def main():
     ibt = IBT()
@@ -82,6 +118,23 @@ def main():
     ibt.add(8)
 
     ibt.display()
+    
+    print()
+    print()
+    ibt.delete(2)
+    ibt.display()
+
+    print()
+    print()
+    ibt.delete(7)
+    ibt.display()
+
+    print()
+    print()
+    ibt.delete(5)
+    ibt.display()
+
+    print(ibt.root.var, ibt.root.left.var, ibt.root.left.left.var, ibt.root.left.left.right.var,)
 
 if __name__ == "__main__":
     main()

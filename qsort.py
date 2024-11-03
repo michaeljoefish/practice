@@ -3,35 +3,33 @@ class Solution:
         self.qsort_ep(nums, 0, len(nums) - 1)
         return nums
 
-    def qsort_ep(self, nums: list, start: int, piv: int):
-        bp = piv
-        ws = bp
+    def partition(self, nums: list, start: int, piv: int):
+        i = start - 1
 
 
-        for i in range(start,piv):
-            if (nums[i] < nums[piv]) and (bp < piv):
-                temp = nums[i]
-                nums[i] = nums[ws]
-                nums[ws] = temp
-                bp = i
-                ws += 1
-            elif (nums[i] > nums[piv]) and (bp >= piv):
-                bp = i
-                ws = bp
+        for j in range(start,piv):
+            if nums[j] < nums[piv]:
+                i += 1
+                temp = nums[j]
+                nums[j] = nums[i]
+                nums[i] = temp
 
         
         
         
         temp = nums[piv]
-        nums[piv] = nums[ws]
-        nums[ws] = temp
+        nums[piv] = nums[i+1]
+        nums[i+1] = temp
 
-        print(f"{start},{piv}")
+        return i+1
+    
+    def qsort_ep(self, nums, start, piv):
+        if start < piv:
+            #print(f"{start},{piv}: {nums}")
+            p = self.partition(nums, start, piv)
 
-        if (ws - start) >= 2:
-            self.qsort_ep(nums, start, ws-1)
-        if (piv - ws) >= 2:
-            self.qsort_ep(nums, ws+1, piv)
+            self.qsort_ep(nums, start, p-1)
+            self.qsort_ep(nums, p+1, piv)
 
 def main():
     bob = Solution()

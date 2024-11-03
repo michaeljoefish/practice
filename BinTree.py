@@ -90,6 +90,26 @@ class IBT:
 
         return max(h_left, h_right)
     
+    def _right_rot(self, node):
+        l_node = node.left
+        node.left = None
+        l_node.right = node
+        return l_node
+
+    def _left_rot(self, node):
+        r_node = node.right
+        node.right = None
+        r_node.left = node
+        return r_node
+    
+    def _L_R_rot(self, node):
+        node.left = self._left_rot(node.left)
+        return self._right_rot(node)
+    
+    def _R_L_rot(self, node):
+        node.right = self._right_rot(node.right)
+        return self._left_rot(node)
+    
     def search(self, var):
         return self._search(self.root, var)
 
@@ -106,32 +126,13 @@ class IBT:
 def main():
     ibt = IBT()
 
-    ibt.add(5)
-    print(ibt.root)
-    
-    ibt.add(3)
+    ibt.add(1)
     ibt.add(2)
-    ibt.add(4)
+    ibt.add(3)
 
-    ibt.add(7)
-    ibt.add(6)
-    ibt.add(8)
 
-    ibt.display()
-    
-    print()
-    print()
-    ibt.delete(2)
-    ibt.display()
+    ibt.root = ibt._left_rot(ibt.root)
 
-    print()
-    print()
-    ibt.delete(7)
-    ibt.display()
-
-    print()
-    print()
-    ibt.delete(5)
     ibt.display()
 
     

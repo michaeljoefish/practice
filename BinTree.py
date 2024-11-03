@@ -134,7 +134,7 @@ def main():
     ibt.delete(5)
     ibt.display()
 
-    print(ibt.root.var, ibt.root.left.var, ibt.root.left.left.var, ibt.root.left.left.right.var,)
+    
 
 if __name__ == "__main__":
     main()

@@ -23,26 +23,27 @@ class Solution:
         zero_count = 0
 
         while p2 < len(nums):
-            if zero_count < k:
+            #print(f"{p1},{p2},b")
+            if zero_count <= k:
                 if nums[p2] == 0:
                     zero_count += 1
-                p2 += 1
-            elif zero_count == k:
-                if nums[p2] != 0:
-                    p2 += 1
+                if zero_count > k:
+                    if p2 - p1 > max_size: max_size = p2-p1
                 else:
-                    zero_count += 1
-                    diff = p2 - p1
-                    if diff > max_size: max_size = diff
+                    p2 += 1
             else:
                 if nums[p1] == 0:
                     zero_count -= 1
+                    p2 += 1
                 p1 += 1
+            #print(f"{p1},{p2},a")
+            #10010
+            #100
             
-            diff = p2 - p1
-            if diff > max_size: max_size = diff
+        diff = p2 - p1
+        if diff > max_size: max_size = diff
 
-            return max_size
+        return max_size
 
 
 
@@ -51,6 +52,8 @@ def main():
 
     print(bob.findMaxAverage([1,12,-5,-6,50,3], 4))
     print(bob.longestOnes([1,1,1,0,0,0,1,1,1,1,0], 2))
+    print(bob.longestOnes([0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], 3))
+    print(bob.longestOnes([0,0,0,1], 4))
 
 if __name__ == "__main__":
     main()

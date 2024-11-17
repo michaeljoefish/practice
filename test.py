@@ -15,3 +15,10 @@ def foo(matrix: list) -> int:
     return total
 
 print(foo([[1,2],[3,4,5]]))
+
+def foob(n:str) -> str:
+    if n == "":
+        return n
+    return (n + "#"*len(n) + foob(n[1:-1]))
+
+print(foob("Hello"))

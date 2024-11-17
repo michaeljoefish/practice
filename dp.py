@@ -22,9 +22,19 @@ class Solution:
         if length - start == 1:
             return cost[start]
         if length - start == 2:
-            return min(cost[start], cost[start] + cost[start+1])
+            return cost[start]
         
         return cost[start] + min(self.minCost(cost, start+1, length) , self.minCost(cost, start+2, length))
+    
+    def test_func(self, cost):
+        res = [cost[-1],cost[-2]]
+
+        for i in range(len(cost)-3, -1, -1):
+            #print(f"{i}:{sum},{left},{right},b")
+            res.append(cost[i] + min(res[-1], res[-2]))
+            #print(f"{i}:{left},{right},{sum}a")
+        
+        return min(res[-1], res[-2])
 
 bob = Solution()
 
@@ -36,6 +46,11 @@ print(bob.minCostClimbingStairs([15,20]))
 print(bob.minCostClimbingStairs([10,15,20]))
 print(bob.minCostClimbingStairs([0,1,1,0]))
 print(bob.minCostClimbingStairs([1,100,1,1,1,100,1,1,100,1]))
+print(bob.test_func([5,1,1,1,5,2,1,1]))
+print(bob.test_func([15,20]))
+print(bob.test_func([10,15,20]))
+print(bob.test_func([0,1,1,0]))
+print(bob.test_func([1,100,1,1,1,100,1,1,100,1]))
 
 
     #(2)

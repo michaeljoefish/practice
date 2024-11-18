@@ -35,17 +35,23 @@ class Solution:
             #print(f"{i}:{left},{right},{sum}a")
         
         return min(res[-1], res[-2])
+
     dp_list = []
     def rob(self, nums: list[int]) -> int:
-        Solution.dp_list.append(nums[-1])
-        return self.rob_num(nums, 0, len(nums))
+        Solution.dp_list = [-1] * len(nums)
+        Solution.dp_list[-1] = nums[-1]
+
+        if len(nums) == 1: return nums[0]
+        max_sum = max(self.rob_num(nums, 0, len(nums)), self.rob_num(nums, 1, len(nums)))
+        print(Solution.dp_list)
+        return max_sum
 
     def rob_num(self, nums: list[int], start: int, length):
-        if length - start <= len(Solution.dp_list):
-            return Solution.dp_list[length-start-1]
-        
-        Solution.dp_list.append(max(nums[start] + self.rob_num(nums, start+1, length), Solution.dp_list[length-start-1]))
-        return Solution.dp_list[length-start-1]
+        if start >= length: return 0
+        if Solution.dp_list[start] != -1: return Solution.dp_list[start]
+
+        Solution.dp_list[start] = max(nums[start] + self.rob_num(nums, start+2, length), self.rob_num(nums, start+1, length))
+        return Solution.dp_list[start]
         """if length - start == 1:
             return nums[start]
         if length - start == 2:
@@ -68,8 +74,8 @@ print(bob.test_func([15,20]))
 print(bob.test_func([10,15,20]))
 print(bob.test_func([0,1,1,0]))
 print(bob.test_func([1,100,1,1,1,100,1,1,100,1]))"""
-#print(bob.rob([2,1,1,2]))
-#print(bob.rob([1,2,3,1]))
+print(bob.rob([2,1,1,2]))
+print(bob.rob([1,2,3,1]))
 print(bob.rob([2,7,9,3,1]))
 print(bob.rob([3]))
 print(bob.rob([2,3]))

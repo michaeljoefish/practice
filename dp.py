@@ -58,6 +58,19 @@ class Solution:
             return max(nums[start], nums[start+1])
         
         return max(nums[start] + self.rob_num(nums, start+2, length), self.rob_num(nums, start+1, length))"""
+    num_rows = 0
+    num_cols = 0
+    def uniquePaths(self, m: int, n: int) -> int:
+        Solution.num_cols = m
+        Solution.num_rows = n
+        return self.numPaths(0, 1) + self.numPaths(1, 0)
+
+    def numPaths(self, x: int, y: int):
+        if (x >= Solution.num_cols) or (y >= Solution.num_rows):
+            return 0
+        if (x == Solution.num_cols - 1) and (y == Solution.num_rows - 1):
+            return 1
+        return self.numPaths(x, y+1) + self.numPaths(x+1, y)
 
 bob = Solution()
 
@@ -73,12 +86,16 @@ print(bob.test_func([5,1,1,1,5,2,1,1]))
 print(bob.test_func([15,20]))
 print(bob.test_func([10,15,20]))
 print(bob.test_func([0,1,1,0]))
-print(bob.test_func([1,100,1,1,1,100,1,1,100,1]))"""
+print(bob.test_func([1,100,1,1,1,100,1,1,100,1]))
 print(bob.rob([2,1,1,2]))
 print(bob.rob([1,2,3,1]))
 print(bob.rob([2,7,9,3,1]))
 print(bob.rob([3]))
-print(bob.rob([2,3]))
+print(bob.rob([2,3]))"""
+print(bob.uniquePaths(1,1))
+print(bob.uniquePaths(2,2))
+print(bob.uniquePaths(3,3))
+print(bob.uniquePaths(3, 7))
 
 
     #(2)

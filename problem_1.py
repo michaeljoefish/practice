@@ -3,32 +3,31 @@ class Solution:
         'I': 1,
         'V': 5,
         'X': 10,
-        'IV': 4,
-        'IX': 9,
         'L': 50,
         'C': 100,
-        'IV': 40,
-        'IX': 90,
         'D': 500,
-        'M': 1000,
-        'IV': 400,
-        'IX': 900,
+        'M': 1000
     }
 
     def romanToInt(self, s: str) -> int:
         sum = 0
+        last = 0
 
-        for i in range(0, len(s)-1, 2):
-            sub = s[i : i+2]
+        sum += Solution.roman_dict[s[0]]
+        last = sum
 
-            if sub in Solution.roman_dict:
-                sum += Solution.roman_dict[sub]
+        for i in range(1, len(s)):
+            temp = Solution.roman_dict[s[i]]
+            if temp > last:
+                sum += temp - 2*last
+                last = temp - last
             else:
-                sum += Solution.roman_dict[sub[0]]
-                sum += Solution.roman_dict[sub[1]]
-        
-        if len(s)%2 == 1:
-            sum += Solution.roman_dict[s[-1]]
+                sum += temp
+                last = temp
         
         return sum
-        
+
+bob = Solution()
+
+print(bob.romanToInt("MCMXCIV"))
+print(bob.romanToInt("LVIII"))
